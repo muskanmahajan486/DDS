@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/core/restlet-jee-2.0.11/org.restlet.ext.servlet.jar"/>
+	<classpathentry kind="lib" path="lib/core/restlet-jee-2.0.11/org.restlet.jar"/>
+	<classpathentry kind="lib" path="lib/compile/javax.servlet.jar"/>
+	<classpathentry kind="lib" path="lib/compile/javax.servlet.jsp.jar"/>
+	<classpathentry kind="lib" path="lib/core/org.apache.commons.fileupload_1.2/org.apache.commons.fileupload.jar"/>
+	<classpathentry kind="lib" path="lib/core/org.apache.commons.io_1.4/org.apache.commons.io.jar"/>
+	<classpathentry kind="lib" path="lib/core/restlet-jee-2.0.11/org.restlet.ext.fileupload.jar"/>
+	<classpathentry kind="lib" path="lib/core/irfileslib/ircodeslib-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/core/irfileslib/irfileslib-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/core/irfileslib/tinsysfwk-1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/core/restlet-jee-2.0.11/org.restlet.ext.spring.jar"/>
+	<classpathentry kind="lib" path="lib/core/restlet-jee-2.0.11/org.restlet.ext.json.jar"/>
+	<classpathentry kind="lib" path="lib/core/org.json_2.0/org.json.jar"/>
+	<classpathentry kind="lib" path="lib/core/flexjson-1.9.2/flexjson.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>
