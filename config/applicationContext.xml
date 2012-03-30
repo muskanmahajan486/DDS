@@ -19,6 +19,9 @@
     
     <bean name="/rest/ProntoFile" class="org.openremote.irservice.resources.pronto.ProntoFileResource" scope="prototype"/>
     <bean name="/rest/{prontoFileHandle}/brands" class="org.openremote.irservice.resources.pronto.BrandsResource" scope="prototype"/>
+    <bean name="/rest/{prontoFileHandle}/brand/{brandName}/devices" class="org.openremote.irservice.resources.pronto.DevicesResource" scope="prototype"/>
+    <bean name="/rest/{prontoFileHandle}/brand/{brandName}/device/{deviceName}/codeSets" class="org.openremote.irservice.resources.pronto.CodeSetsResource" scope="prototype"/>
+    <bean name="/rest/{prontoFileHandle}/brand/{brandName}/device/{deviceName}/codeSet/{index}/IRCommands" class="org.openremote.irservice.resources.pronto.IRCommandsResource" scope="prototype"/>
     
     <bean name="prontoFileParser" class="com.tinsys.pronto.irfiles.ProntoFileParser" scope="singleton"/>
     
