@@ -9,10 +9,10 @@ import java.util.zip.ZipFile;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.openremote.irservice.domain.BrandInfo;
-import org.openremote.irservice.domain.CodeSetInfo;
-import org.openremote.irservice.domain.DeviceInfo;
-import org.openremote.irservice.domain.IRCommandInfo;
+import org.openremote.ir.domain.BrandInfo;
+import org.openremote.ir.domain.CodeSetInfo;
+import org.openremote.ir.domain.DeviceInfo;
+import org.openremote.ir.domain.IRCommandInfo;
 import org.xml.sax.SAXException;
 
 import com.tinsys.ir.database.Brand;

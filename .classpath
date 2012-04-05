@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="lib/core/restlet-jee-2.0.11/org.restlet.ext.json.jar"/>
 	<classpathentry kind="lib" path="lib/core/org.json_2.0/org.json.jar"/>
 	<classpathentry kind="lib" path="lib/core/flexjson-1.9.2/flexjson.jar"/>
+	<classpathentry kind="lib" path="lib/core/openremote/or-commons.jar"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
