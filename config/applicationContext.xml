@@ -11,22 +11,12 @@
         <property name="defaultTarget" ref="application"/>
     </bean>
     
-    <bean id="application" class="org.openremote.irservice.IRServiceApplication">
+    <bean id="application" class="org.openremote.devicediscovery.DeviceDiscoveryServiceApplication">
         <property name="root" ref="router"/>
     </bean>
     
     <bean name="router" class="org.restlet.ext.spring.SpringBeanRouter" />
     
-    <bean name="/rest/ProntoFile" class="org.openremote.irservice.resources.pronto.ProntoFileResource" scope="prototype"/>
-    <bean name="/rest/{prontoFileHandle}/brands" class="org.openremote.irservice.resources.pronto.BrandsResource" scope="prototype"/>
-    <bean name="/rest/{prontoFileHandle}/brand/{brandName}/devices" class="org.openremote.irservice.resources.pronto.DevicesResource" scope="prototype"/>
-    <bean name="/rest/{prontoFileHandle}/brand/{brandName}/device/{deviceName}/codeSets" class="org.openremote.irservice.resources.pronto.CodeSetsResource" scope="prototype"/>
-    <bean name="/rest/{prontoFileHandle}/brand/{brandName}/device/{deviceName}/codeSet/{index}/IRCommands" class="org.openremote.irservice.resources.pronto.IRCommandsResource" scope="prototype"/>
-
-    <bean name="/rest/GenerateDeviceCommands" class="org.openremote.irservice.resources.GenerateDeviceCommandsResource" scope="prototype"/>
-    
-    <bean name="prontoFileParser" class="com.tinsys.pronto.irfiles.ProntoFileParser" scope="singleton"/>
-    
-    <bean name="prontoService" class="org.openremote.irservice.service.ProntoService" scope="singleton"/>
+    <bean name="/rest/DeviceDiscovery" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype"/>
 
 </beans>
