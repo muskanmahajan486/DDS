@@ -32,6 +32,32 @@
             <value>${jdbc.password}</value>
         </property>
     </bean>
+
+    <bean id="baseSessionFactory"  class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" abstract="true">
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.openremote.devicediscovery.db.CustomMySQL5Dialect</prop>
+                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.OSCacheProvider</prop>
+                <prop key="hibernate.show_sql">false</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+    </bean>
+	
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" parent="baseSessionFactory">
+        <property name="annotatedClasses">
+            <list>
+                <value>org.openremote.devicediscovery.domain.Account</value>
+                <value>org.openremote.devicediscovery.domain.User</value>
+                <value>org.openremote.devicediscovery.domain.DiscoveredDevice</value>
+                <value>org.openremote.devicediscovery.domain.DiscoveredDeviceAttr</value>
+            </list>
+        </property>
+    </bean>
+
+	<bean id="genericDAO" class="org.openremote.devicediscovery.GenericDAO"></bean>
 	
     <bean id="component" class="org.restlet.ext.spring.SpringComponent">
         <property name="defaultTarget" ref="application"/>
@@ -43,6 +69,11 @@
     
     <bean name="router" class="org.restlet.ext.spring.SpringBeanRouter" />
     
-    <bean name="/rest/DeviceDiscovery" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype"/>
+    <bean name="/rest/DiscoveredDevices" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype">
+    	<property name="dao" ref="genericDAO" />
+    </bean>
+    <bean name="/rest/DiscoveredDevices/{deviceOid}" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype">
+    	<property name="dao" ref="genericDAO" />
+    </bean>
 
 </beans>
