@@ -9,7 +9,6 @@ import org.openremote.devicediscovery.GenericDAO;
 import org.openremote.devicediscovery.domain.Account;
 import org.openremote.devicediscovery.domain.DiscoveredDevice;
 import org.openremote.devicediscovery.domain.DiscoveredDeviceAttr;
-import org.openremote.devicediscovery.domain.DiscoveredDeviceDTO;
 import org.openremote.devicediscovery.domain.User;
 import org.openremote.rest.GenericResourceResultWithErrorMessage;
 import org.restlet.data.Form;
@@ -38,9 +37,9 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
    * type=typeName<br>
    * protocol=protocolName<br>
    * <p>
-   * REST Url: /rest/DiscoveredDevices -> return all discovered devices<br>
-   * REST Url:/rest/DiscoveredDevices/{deviceOid} -> return the discovered device with given OID
-   * REST Url:/rest/DiscoveredDevices?used=true&type=Switch&protocol=knx -> return all discovered that match the filter criteria
+   * REST Url: /rest/discoveredDevices -> return all discovered devices<br>
+   * REST Url: /rest/discoveredDevice/{deviceOid} -> return the discovered device with given OID
+   * REST Url: /rest/discoveredDevices?used=true&type=Switch&protocol=knx -> return all discovered that match the filter criteria
    * 
    * @return a List of DiscoveredDevices
    */
@@ -90,7 +89,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
   /**
    * Add the given devices to the database
    * POST data has to contain a list of devices as JSON string
-   * REST POST Url:/rest/DiscoveredDevices
+   * REST POST Url:/rest/discoveredDevices
    * @param data
    * @return a list of OID's of the saved devices
    */
@@ -131,7 +130,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
   /**
    * Update the device with the given id
    * PUT data has to contain device as JSON string
-   * REST PUT Url:/rest/DiscoveredDevices
+   * REST PUT Url:/rest/discoveredDevice
    * @param data
    * @return the OID of the updated device
    */
@@ -166,7 +165,6 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
 
   /**
    * Delete the device with the given id
-   * REST DELETE Url:/rest/DiscoveredDevices/{deviceOid}
    * @return
    */
   @Delete("json")
