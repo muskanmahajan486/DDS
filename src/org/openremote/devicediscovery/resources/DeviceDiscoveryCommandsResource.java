@@ -38,7 +38,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
    * protocol=protocolName<br>
    * <p>
    * REST Url: /rest/discoveredDevices -> return all discovered devices<br>
-   * REST Url: /rest/discoveredDevice/{deviceOid} -> return the discovered device with given OID
+   * REST Url: /rest/discoveredDevices/{deviceOid} -> return the discovered device with given OID
    * REST Url: /rest/discoveredDevices?used=true&type=Switch&protocol=knx -> return all discovered that match the filter criteria
    * 
    * @return a List of DiscoveredDevices
@@ -130,7 +130,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
   /**
    * Update the device with the given id
    * PUT data has to contain device as JSON string
-   * REST PUT Url:/rest/discoveredDevice
+   * REST PUT Url:/rest/discoveredDevices
    * @param data
    * @return the OID of the updated device
    */

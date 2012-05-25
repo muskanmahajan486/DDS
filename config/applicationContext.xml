@@ -72,7 +72,7 @@
     <bean name="/rest/discoveredDevices" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype">
     	<property name="dao" ref="genericDAO" />
     </bean>
-    <bean name="/rest/discoveredDevice/{deviceOid}" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype">
+    <bean name="/rest/discoveredDevices/{deviceOid}" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype">
     	<property name="dao" ref="genericDAO" />
     </bean>
 
