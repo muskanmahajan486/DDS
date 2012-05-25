@@ -69,10 +69,10 @@
     
     <bean name="router" class="org.restlet.ext.spring.SpringBeanRouter" />
     
-    <bean name="/rest/DiscoveredDevices" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype">
+    <bean name="/rest/discoveredDevices" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype">
     	<property name="dao" ref="genericDAO" />
     </bean>
-    <bean name="/rest/DiscoveredDevices/{deviceOid}" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype">
+    <bean name="/rest/discoveredDevice/{deviceOid}" class="org.openremote.devicediscovery.resources.DeviceDiscoveryCommandsResource" scope="prototype">
     	<property name="dao" ref="genericDAO" />
     </bean>
 
