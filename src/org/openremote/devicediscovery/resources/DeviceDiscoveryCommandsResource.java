@@ -93,6 +93,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
    * @param data
    * @return a list of OID's of the saved devices
    */
+  @SuppressWarnings("unchecked")
   @Post("json:json")
   public Representation saveDevices(Representation data)
   {
@@ -114,8 +115,11 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
             {
               discoveredDeviceAttr.setDiscoveredDevice(discoveredDevice);
             }
-            dao.save(discoveredDevice);
-            newOIDList.add(discoveredDevice.getOid());
+            List devices = dao.getHibernateTemplate().findByExample(discoveredDevice);
+            if (devices.isEmpty()) { //Only add if device is not available already
+              dao.save(discoveredDevice);
+              newOIDList.add(discoveredDevice.getOid());
+            }
           }
           result = new GenericResourceResultWithErrorMessage(null, newOIDList);
         } catch (Exception e) {
@@ -132,7 +136,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
    * PUT data has to contain device as JSON string
    * REST PUT Url:/rest/discoveredDevices
    * @param data
-   * @return the OID of the updated device
+   * @return the updated device
    */
   @Put("json:json")
   public Representation updateDevice(Representation data)
@@ -153,7 +157,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
             discoveredDeviceAttr.setDiscoveredDevice(device);
           }
           DiscoveredDevice d = (DiscoveredDevice)dao.merge(device);
-          result = new GenericResourceResultWithErrorMessage(null, d.getOid());
+          result = new GenericResourceResultWithErrorMessage(null, d);
         } catch (Exception e) {
           result = new GenericResourceResultWithErrorMessage(e.getMessage(), null);
         }
