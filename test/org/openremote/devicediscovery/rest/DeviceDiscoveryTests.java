@@ -16,7 +16,7 @@ import org.restlet.resource.ClientResource;
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
-public class Client
+public class DeviceDiscoveryTests
 {
 
   private static DiscoveredDeviceDTO deviceToUpdate;
@@ -29,7 +29,7 @@ public class Client
   @Test
   public void testAddDevices() throws Exception
   {
-    ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/DiscoveredDevices");
+    ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/discoveredDevices");
     cr.setChallengeResponse(ChallengeScheme.HTTP_BASIC, "test55", "test55");
 
     List<DiscoveredDeviceDTO> list = new ArrayList<DiscoveredDeviceDTO>();
@@ -78,7 +78,7 @@ public class Client
   @Test
   public void testQueryAllDevices() throws Exception
   {
-    ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/DiscoveredDevices");
+    ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/discoveredDevices");
     cr.setChallengeResponse(ChallengeScheme.HTTP_BASIC, "test55", "test55");
     Representation r = cr.get();
     String str = r.getText();
@@ -95,7 +95,7 @@ public class Client
   @Test
   public void testQueryOneDevice() throws Exception
   {
-    ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/DiscoveredDevices?protocol=zwave");
+    ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/discoveredDevices?protocol=zwave");
     cr.setChallengeResponse(ChallengeScheme.HTTP_BASIC, "test55", "test55");
     Representation r = cr.get();
     String str = r.getText();
@@ -111,16 +111,16 @@ public class Client
   @Test
   public void testQueryUpdateDevice() throws Exception
   {
-    ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/DiscoveredDevices/" + deviceToUpdate.getOid());
+    ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/discoveredDevices/" + deviceToUpdate.getOid());
     cr.setChallengeResponse(ChallengeScheme.HTTP_BASIC, "test55", "test55");
 
     deviceToUpdate.setUsed(true);
     Representation rep = new JsonRepresentation(new JSONSerializer().exclude("*.class").deepSerialize(deviceToUpdate));
     Representation result = cr.put(rep);
     String str = result.getText();
-    GenericResourceResultWithErrorMessage res =new JSONDeserializer<GenericResourceResultWithErrorMessage>().use(null, GenericResourceResultWithErrorMessage.class).use("result", Long.class).deserialize(str); 
+    GenericResourceResultWithErrorMessage res =new JSONDeserializer<GenericResourceResultWithErrorMessage>().use(null, GenericResourceResultWithErrorMessage.class).use("result", DiscoveredDeviceDTO.class).deserialize(str); 
 
-    Assert.assertEquals(deviceToUpdate.getOid(), res.getResult());
+    Assert.assertEquals(deviceToUpdate.getOid(), ((DiscoveredDeviceDTO)res.getResult()).getOid());
   }
   
   /**
@@ -131,7 +131,7 @@ public class Client
   {
     for (Long oid: addedDeviceOIDs)
     {
-      ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/DiscoveredDevices/" + oid);
+      ClientResource cr = new ClientResource("http://localhost:8080/dds/rest/discoveredDevices/" + oid);
       cr.setChallengeResponse(ChallengeScheme.HTTP_BASIC, "test55", "test55");
       Representation result = cr.delete();
       String str = result.getText();
