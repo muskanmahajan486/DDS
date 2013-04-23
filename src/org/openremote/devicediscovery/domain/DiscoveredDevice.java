@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import flexjson.JSON;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "discovered_device")
@@ -37,6 +38,13 @@ public class DiscoveredDevice extends BusinessEntity
 
   /** The account whose controller announced this device */
   private Account account;
+
+  @Override
+  public String toString()
+  {
+    return new ToStringBuilder(this).append("name", name).append("model", model).append("protocol", protocol).append("type", type).append("used",
+            used).append("deviceAttrs", deviceAttrs).toString();
+  }
 
   public String getName()
   {
@@ -151,4 +159,6 @@ public class DiscoveredDevice extends BusinessEntity
     DiscoveredDevice other = (DiscoveredDevice) obj;
     return other.getOid() == getOid();
   }
+  
+  
 }
