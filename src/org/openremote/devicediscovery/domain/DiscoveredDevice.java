@@ -43,7 +43,7 @@ public class DiscoveredDevice extends BusinessEntity
   public String toString()
   {
     return new ToStringBuilder(this).append("name", name).append("model", model).append("protocol", protocol).append("type", type).append("used",
-            used).append("deviceAttrs", deviceAttrs).toString();
+            used).append("deviceAttrs", deviceAttrs).append("account", account).toString();
   }
 
   public String getName()
