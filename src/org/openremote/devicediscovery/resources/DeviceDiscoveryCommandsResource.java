@@ -120,14 +120,15 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
             {
               discoveredDeviceAttr.setDiscoveredDevice(discoveredDevice);
             }
-            DiscoveredDevice sample = new DiscoveredDevice();
-            sample.setAccount(account);
-            sample.setModel(discoveredDevice.getModel());
-            sample.setName(discoveredDevice.getName());
-            sample.setProtocol(discoveredDevice.getProtocol());
-            sample.setType(discoveredDevice.getType());
-            log.debug("check device: " + sample);
-            List devices = dao.getHibernateTemplate().findByExample(sample);
+            
+            log.debug("check device if device exists: " + discoveredDevice);
+            DetachedCriteria search = DetachedCriteria.forClass(DiscoveredDevice.class);
+            search.add(Restrictions.eq("account", account));
+            search.add(Restrictions.eq("protocol", discoveredDevice.getProtocol()));
+            search.add(Restrictions.eq("type", discoveredDevice.getType()));
+            search.add(Restrictions.eq("name", discoveredDevice.getName()));
+            search.add(Restrictions.eq("model", discoveredDevice.getModel()));
+            List<DiscoveredDevice> devices = dao.findByDetachedCriteria(search);
             if (devices.isEmpty()) { //Only add if device is not available already
               dao.save(discoveredDevice);
               newOIDList.add(discoveredDevice.getOid());
