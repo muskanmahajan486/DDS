@@ -25,6 +25,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * The Class Account.
@@ -43,6 +44,13 @@ public class Account extends BusinessEntity
 
   /** The devices. */
   private List<DiscoveredDevice> discoverdDevices;
+
+  @Override
+  public String toString()
+  {
+    long oid = getOid();
+    return new ToStringBuilder(this).append("oid", oid).toString();
+  }
 
   /**
    * Instantiates a new account.
@@ -103,4 +111,6 @@ public class Account extends BusinessEntity
     Account other = (Account) obj;
     return other.getOid() == getOid();
   }
+  
+  
 }
