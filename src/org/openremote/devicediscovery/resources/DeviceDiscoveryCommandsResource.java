@@ -1,8 +1,10 @@
 package org.openremote.devicediscovery.resources;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.openremote.devicediscovery.GenericDAO;
@@ -29,6 +31,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
 {
 
   private GenericDAO dao;
+  private static Logger log = Logger.getLogger(DeviceDiscoveryCommandsResource.class);
 
   /**
    * Return a list of all or one DiscoveredDevice.<p>
@@ -97,6 +100,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
   @Post("json:json")
   public Representation saveDevices(Representation data)
   {
+    log.debug("save discovered devices - start");
     Representation rep = null;
     GenericResourceResultWithErrorMessage result = null;
     if (data != null) {
@@ -107,6 +111,7 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
         List<Long> newOIDList = new ArrayList<Long>();
         try {
           String jsonData = data.getText();
+          log.debug("received json data with devices: " + jsonData);
           List<DiscoveredDevice> dtos = new JSONDeserializer<List<DiscoveredDevice>>().use(null, ArrayList.class).use("values", DiscoveredDevice.class).deserialize(jsonData);
           for (DiscoveredDevice discoveredDevice : dtos)
           {
@@ -115,25 +120,33 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
             {
               discoveredDeviceAttr.setDiscoveredDevice(discoveredDevice);
             }
-            DiscoveredDevice sample = new DiscoveredDevice();
-            sample.setAccount(account);
-            sample.setModel(discoveredDevice.getModel());
-            sample.setName(discoveredDevice.getName());
-            sample.setProtocol(discoveredDevice.getProtocol());
-            sample.setType(discoveredDevice.getType());
-            List devices = dao.getHibernateTemplate().findByExample(sample);
+            
+            log.debug("check device if device exists: " + discoveredDevice);
+            DetachedCriteria search = DetachedCriteria.forClass(DiscoveredDevice.class);
+            search.add(Restrictions.eq("account", account));
+            search.add(Restrictions.eq("protocol", discoveredDevice.getProtocol()));
+            search.add(Restrictions.eq("type", discoveredDevice.getType()));
+            search.add(Restrictions.eq("name", discoveredDevice.getName()));
+            search.add(Restrictions.eq("model", discoveredDevice.getModel()));
+            List<DiscoveredDevice> devices = dao.findByDetachedCriteria(search);
             if (devices.isEmpty()) { //Only add if device is not available already
               dao.save(discoveredDevice);
               newOIDList.add(discoveredDevice.getOid());
+              log.debug("device saved with oid: " + discoveredDevice.getOid());
+            } else {
+              log.debug("device already exists");
             }
           }
           result = new GenericResourceResultWithErrorMessage(null, newOIDList);
         } catch (Exception e) {
+          log.error("could not save discovered devices", e);
           result = new GenericResourceResultWithErrorMessage(e.getMessage(), null);
         }
         rep = new JsonRepresentation(new JSONSerializer().exclude("*.class").deepSerialize(result));
       }
     }
+    try {log.debug("return json result: " + rep.getText());} catch (IOException ignored){}
+    log.debug("save discovered devices - end");
     return rep;
   }
 
