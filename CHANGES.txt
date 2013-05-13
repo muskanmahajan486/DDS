@@ -1,0 +1,4 @@
+MODELER-481
+===========
+
+ - Fixed : Check if discovered device already exist for account does not work
