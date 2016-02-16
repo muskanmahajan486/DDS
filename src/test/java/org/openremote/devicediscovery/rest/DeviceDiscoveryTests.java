@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.openremote.devicediscovery.domain.DiscoveredDeviceAttrDTO;
 import org.openremote.devicediscovery.domain.DiscoveredDeviceDTO;
@@ -16,6 +17,7 @@ import org.restlet.resource.ClientResource;
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
 
+@Ignore
 public class DeviceDiscoveryTests
 {
 
