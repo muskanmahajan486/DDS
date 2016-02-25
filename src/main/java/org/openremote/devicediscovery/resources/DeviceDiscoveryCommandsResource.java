@@ -13,19 +13,22 @@ import org.openremote.devicediscovery.domain.DiscoveredDevice;
 import org.openremote.devicediscovery.domain.DiscoveredDeviceAttr;
 import org.openremote.devicediscovery.domain.User;
 import org.openremote.rest.GenericResourceResultWithErrorMessage;
+import org.restlet.Request;
 import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.ext.json.JsonRepresentation;
+import org.restlet.ext.servlet.ServletUtils;
 import org.restlet.representation.Representation;
 import org.restlet.resource.Delete;
 import org.restlet.resource.Get;
 import org.restlet.resource.Post;
 import org.restlet.resource.Put;
 import org.restlet.resource.ServerResource;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import flexjson.JSONDeserializer;
 import flexjson.JSONSerializer;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class DeviceDiscoveryCommandsResource extends ServerResource
 {
@@ -54,7 +57,11 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
     {
       String oid = (String) getRequest().getAttributes().get("deviceOid");
       Form queryParams = getQuery();
-      String username = SecurityContextHolder.getContext().getAuthentication().getName();
+
+      Request restletRequest = getRequest();
+      HttpServletRequest servletRequest = ServletUtils.getRequest(restletRequest);
+      String username = servletRequest.getUserPrincipal().getName();
+
       User user = dao.getByNonIdField(User.class, "username", username);
       Account account = user.getAccount();
       DetachedCriteria search = DetachedCriteria.forClass(DiscoveredDevice.class);
@@ -105,7 +112,10 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
     GenericResourceResultWithErrorMessage result = null;
     if (data != null) {
       if (MediaType.APPLICATION_JSON.equals(data.getMediaType(), true)) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Request restletRequest = getRequest();
+        HttpServletRequest servletRequest = ServletUtils.getRequest(restletRequest);
+        String username = servletRequest.getUserPrincipal().getName();
+
         User user = dao.getByNonIdField(User.class, "username", username);
         Account account = user.getAccount();
         List<Long> newOIDList = new ArrayList<Long>();
@@ -164,7 +174,10 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
     GenericResourceResultWithErrorMessage result = null;
     if (data != null) {
       if (MediaType.APPLICATION_JSON.equals(data.getMediaType(), true)) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Request restletRequest = getRequest();
+        HttpServletRequest servletRequest = ServletUtils.getRequest(restletRequest);
+        String username = servletRequest.getUserPrincipal().getName();
+
         User user = dao.getByNonIdField(User.class, "username", username);
         Account account = user.getAccount();
         try {
@@ -196,7 +209,10 @@ public class DeviceDiscoveryCommandsResource extends ServerResource
     Representation rep = null;
     GenericResourceResultWithErrorMessage result = null;
     String oid = (String) getRequest().getAttributes().get("deviceOid");
-    String username = SecurityContextHolder.getContext().getAuthentication().getName();
+    Request restletRequest = getRequest();
+    HttpServletRequest servletRequest = ServletUtils.getRequest(restletRequest);
+    String username = servletRequest.getUserPrincipal().getName();
+
     User user = dao.getByNonIdField(User.class, "username", username);
     Account account = user.getAccount();
     DetachedCriteria search = DetachedCriteria.forClass(DiscoveredDevice.class);
